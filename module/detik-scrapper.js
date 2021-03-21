@@ -65,6 +65,42 @@ const scrapTopTopics = () => {
     });
 }
 
+const scrapTopVideos = () => {
+    return new Promise((resolve, reject) => {
+        axios('https://20.detik.com/?tag_from=wp_belt_videoTerpopuler')
+        .then(response => {
+            const html = response.data;
+            const $ = cheerio.load(html);
+            const div = $("div[class='list media_rows'] > article");
+            const videos = [];
+
+            div.each((index, element) => {
+                const rank = index + 1;
+                const title = $(element).find(".box_text > h3").text();
+
+                videos.push({
+                    rank,
+                    title
+                });
+            });
+
+            console.log(html);
+            resolve(videos);
+        })
+        .catch(err => {
+            reject(err);
+        });
+    });
+}
+
+scrapTopVideos()
+.then(data => {
+    console.log(data);
+})
+.catch(err => {
+    console.log(err);
+})
+
 module.exports = {
     scrapTopNews,
     scrapTopTopics
