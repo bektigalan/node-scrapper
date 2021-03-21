@@ -1,11 +1,11 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-const host = `https://www.detik.com/`;
+const host = `https://www.detik.com/terpopuler`;
 
-const scrapTopNews = () => {
+const scrapTopNews = (category) => {
     return new Promise((resolve, reject) => {
-        axios(host + 'terpopuler')
+        axios(host + category)
         .then(response => {
             const html = response.data;
             const $ = cheerio.load(html);
@@ -14,7 +14,8 @@ const scrapTopNews = () => {
 
             article.each((index, element) => {
                 const rank = index + 1;
-                const title = $(element).find(".media__title > a").attr('onclick').split(', ')[2].replace("\"", "");
+                const title = $(element).find(".media__title > a").text();
+                const subtitle = $(element).find(".media__date").text();
                 const image = $(element).find(".media__image > a > span > img").attr('src');
                 const link = $(element).find(".media__title > a").attr('href');
                 const date = $(element).find(".media__date > span").attr('title');
@@ -22,12 +23,14 @@ const scrapTopNews = () => {
                 topNews.push({
                     rank,
                     title,
+                    subtitle,
                     image,
                     link,
                     date
                 });
             });
 
+            console.log(article);
             resolve(topNews);
         })
         .catch(err => {

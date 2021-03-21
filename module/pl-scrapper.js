@@ -37,13 +37,6 @@ const scrapGoalRecord = (category) => {
     });
 }
 
-scrapGoalRecord('goals')
-.then(data => {
-
-}).catch(err => {
-
-});
-
 module.exports = {
     scrapGoalRecord
 }
