@@ -1,5 +1,5 @@
-const { getGoalRecord } = require('./pl-controller');
+const { getRecord } = require('./pl-controller');
 
 module.exports = {
-    getGoalRecord
+    getRecord
 }

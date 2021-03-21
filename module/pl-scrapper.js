@@ -2,9 +2,9 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 const host = `https://www.premierleague.com`;
-const url = `${host}/stats/top/players/goals?se=-1&cl=-1&iso=-1&po=-1`;
 
-const scrapGoalRecord = () => {
+const scrapGoalRecord = (category) => {
+    const url = `${host}/stats/top/players/${category}?se=-1&cl=-1&iso=-1&po=-1`;
     return new Promise((resolve, reject) => {
         axios(url)
         .then(response => {

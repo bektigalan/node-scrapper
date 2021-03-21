@@ -1,8 +1,8 @@
 const { Router } = require('express');
-const { getGoalRecord } = require('../controller');
+const { getRecord } = require('../controller');
 
 const router = Router();
 
-router.get('/pl/goals', getGoalRecord);
+router.get('/pl/:category', getRecord);
 
 module.exports = router;
