@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getRecord } = require('../controller');
+const { getRecord } = require('../controller/pl-controller');
 
 const router = Router();
 

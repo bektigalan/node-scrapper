@@ -1,4 +1,4 @@
-const { scrapGoalRecord } = require('../module');
+const { scrapGoalRecord } = require('../module/pl-scrapper');
 const createError = require('http-errors');
 
 const getRecord = (req, res, next) => {

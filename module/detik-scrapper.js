@@ -1,11 +1,11 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-const host = `https://www.detik.com/terpopuler`;
+const host = `https://www.detik.com`;
 
 const scrapTopNews = (category) => {
     return new Promise((resolve, reject) => {
-        axios(host + category)
+        axios(host + '/terpopuler' + category)
         .then(response => {
             const html = response.data;
             const $ = cheerio.load(html);
@@ -30,7 +30,6 @@ const scrapTopNews = (category) => {
                 });
             });
 
-            console.log(article);
             resolve(topNews);
         })
         .catch(err => {
@@ -39,6 +38,34 @@ const scrapTopNews = (category) => {
     });
 }
 
+const scrapTopTopics = () => {
+    return new Promise((resolve, reject) => {
+        axios(host)
+        .then(response => {
+            const html = response.data;
+            const $ = cheerio.load(html);
+            const div = $("div[class='box terpopuler'] > div[class='list-content '] > article");
+            const topics = [];
+
+            div.each((index, element) => {
+                const rank = index + 1;
+                const topic = $(element).find(".media__title > a").text();
+
+                topics.push({
+                    rank,
+                    topic
+                });
+            });
+
+            resolve(topics);
+        })
+        .catch(err => {
+            reject(err);
+        });
+    });
+}
+
 module.exports = {
-    scrapTopNews
+    scrapTopNews,
+    scrapTopTopics
 }
