@@ -6,22 +6,21 @@ const category = {
     trending: '/news'
 }
 
-const getTopNews = (req, res, next) => {
+const getTopNews = async (req, res, next) => {
     const path = category[req.params.category];
 
     if(!path){
         next(createError(404));
     }
 
-    scrapTopNews(path)
-    .then(data => {
+    try {
+        const data = await scrapTopNews(path);
         res.json({
             data
-        })
-    })
-    .catch(err => {
+        });
+    } catch(error) {
         next(createError(500));
-    })
+    }
 }
 
 module.exports = {
