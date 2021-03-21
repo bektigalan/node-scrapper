@@ -13,22 +13,16 @@ const scrapGoalRecord = (category) => {
             const statsTable = $('.statsTableContainer > tr');
             const topPremierLeagueScorers = [];
 
-            statsTable.each((index, element) => {
-                const rank = $(element).find('.rank > strong').text();
-                const playerName = $(element).find('.playerName > strong').text();
-                const detail = host + $(element).find('.playerName').attr('href');
-                const nationality = $(element).find('.playerCountry').text();
-                const goals = $(element).find('.mainStat').text();
-
+            statsTable.each(function() {
                 topPremierLeagueScorers.push({
-                    rank,
-                    name: playerName,
-                    detail,
-                    nationality,
-                    goals,
+                    rank: $(this).find('.rank > strong').text(),
+                    name: $(this).find('.playerName > strong').text(),
+                    detail: host + $(this).find('.playerName').attr('href'),
+                    nationality: $(this).find('.playerCountry').text(),
+                    goals: $(this).find('.mainStat').text(),
                 });
             });
-            console.log(statsTable);
+
             resolve(topPremierLeagueScorers);
         })
         .catch(err => {

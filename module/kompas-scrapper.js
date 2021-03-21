@@ -13,20 +13,13 @@ const scrapTopNews = (category) => {
             const news = [];
 
             div.each((index, element) => {
-                const rank = index + 1;
-                const title = $(element).find(".article__list__title > h3 > a").text();
-                const subtitle = $(element).find(".article__list__info > div[class='article__subtitle article__subtitle--inline']").text();
-                const image = $(element).find("div[class='article__list__asset clearfix'] > .article__asset > img").attr('src');
-                const link = $(element).find(".article__list__title > h3 > a").attr('href');
-                const date = $(element).find(".article__list__info > div[class='article__date']").text();
-
                 news.push({
-                    rank,
-                    title,
-                    subtitle,
-                    image,
-                    link,
-                    date
+                    rank: index + 1,
+                    title: $(element).find(".article__list__title > h3 > a").text(),
+                    subtitle: $(element).find(".article__list__info > div[class='article__subtitle article__subtitle--inline']").text(),
+                    image: $(element).find("div[class='article__list__asset clearfix'] > .article__asset > img").attr('src'),
+                    link: $(element).find(".article__list__title > h3 > a").attr('href'),
+                    date: $(element).find(".article__list__info > div[class='article__date']").text()
                 });
             });
 

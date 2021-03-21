@@ -1,4 +1,4 @@
-const { scrapTopNews, scrapTopTopics } = require('../module/detik-scrapper');
+const { scrapTopNews, scrapTopTopics, scrapTopVideos } = require('../module/detik-scrapper');
 const createError = require('http-errors');
 
 const category = {
@@ -42,7 +42,20 @@ const getTopTopics = (req, res, next) => {
     })
 }
 
+const getTopVideos = (req, res, next) => {
+    scrapTopVideos()
+    .then(data => {
+        res.json({
+            data
+        })
+    })
+    .catch(err => {
+        next(createError(500));
+    })
+}
+
 module.exports = {
     getTopNews,
-    getTopTopics
+    getTopTopics,
+    getTopVideos
 }

@@ -1,4 +1,5 @@
 const axios = require('axios');
+const puppeteer = require('puppeteer')
 const cheerio = require('cheerio');
 
 const host = `https://www.detik.com`;
@@ -13,20 +14,13 @@ const scrapTopNews = (category) => {
             const topNews = [];
 
             article.each((index, element) => {
-                const rank = index + 1;
-                const title = $(element).find(".media__title > a").text();
-                const subtitle = $(element).find(".media__date").text();
-                const image = $(element).find(".media__image > a > span > img").attr('src');
-                const link = $(element).find(".media__title > a").attr('href');
-                const date = $(element).find(".media__date > span").attr('title');
-
                 topNews.push({
-                    rank,
-                    title,
-                    subtitle,
-                    image,
-                    link,
-                    date
+                    rank: index + 1,
+                    title: $(element).find(".media__title > a").text(),
+                    subtitle: $(element).find(".media__date").text(),
+                    image: $(element).find(".media__image > a > span > img").attr('src'),
+                    link: $(element).find(".media__title > a").attr('href'),
+                    date: $(element).find(".media__date > span").attr('title')
                 });
             });
 
@@ -48,12 +42,9 @@ const scrapTopTopics = () => {
             const topics = [];
 
             div.each((index, element) => {
-                const rank = index + 1;
-                const topic = $(element).find(".media__title > a").text();
-
                 topics.push({
-                    rank,
-                    topic
+                    rank: index + 1,
+                    topic: $(element).find(".media__title > a").text()
                 });
             });
 
@@ -67,25 +58,32 @@ const scrapTopTopics = () => {
 
 const scrapTopVideos = () => {
     return new Promise((resolve, reject) => {
-        axios('https://20.detik.com/?tag_from=wp_belt_videoTerpopuler')
-        .then(response => {
-            const html = response.data;
+        puppeteer
+        .launch()
+        .then(browser => browser.newPage())
+        .then(page => {
+            return page.goto('https://20.detik.com/?tag_from=wp_belt_videoTerpopuler', 
+            {
+                waitUntil:'load', 
+                timeout:0
+            }).then(function() {
+                return page.content();
+            });
+        })
+        .then(html => {
             const $ = cheerio.load(html);
-            const div = $("div[class='list media_rows'] > article");
-            const videos = [];
-
-            div.each((index, element) => {
-                const rank = index + 1;
-                const title = $(element).find(".box_text > h3").text();
-
-                videos.push({
-                    rank,
-                    title
+            const newsHeadlines = [];
+            $("div[class='list media_rows'] > article").each((index, element) => {
+                newsHeadlines.push({
+                    rank: index + 1,
+                    title: $(element).find(".box_text > h3").text(),
+                    thumbnail: $(element).find("span[class='ratiobox_content lqd_block'] > img").attr('data-thumbnail'),
+                    time: $(element).find("span[class=time]").text(),
+                    link: $(element).find("a").attr('href')
                 });
             });
 
-            console.log(html);
-            resolve(videos);
+            resolve(newsHeadlines);
         })
         .catch(err => {
             reject(err);
@@ -93,15 +91,8 @@ const scrapTopVideos = () => {
     });
 }
 
-scrapTopVideos()
-.then(data => {
-    console.log(data);
-})
-.catch(err => {
-    console.log(err);
-})
-
 module.exports = {
     scrapTopNews,
-    scrapTopTopics
+    scrapTopTopics,
+    scrapTopVideos
 }
