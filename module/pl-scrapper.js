@@ -13,12 +13,12 @@ const scrapGoalRecord = (category) => {
             const statsTable = $('.statsTableContainer > tr');
             const topPremierLeagueScorers = [];
 
-            statsTable.each(function() {
-                const rank = $(this).find('.rank > strong').text();
-                const playerName = $(this).find('.playerName > strong').text();
-                const detail = host + $(this).find('.playerName').attr('href');
-                const nationality = $(this).find('.playerCountry').text();
-                const goals = $(this).find('.mainStat').text();
+            statsTable.each((index, element) => {
+                const rank = $(element).find('.rank > strong').text();
+                const playerName = $(element).find('.playerName > strong').text();
+                const detail = host + $(element).find('.playerName').attr('href');
+                const nationality = $(element).find('.playerCountry').text();
+                const goals = $(element).find('.mainStat').text();
 
                 topPremierLeagueScorers.push({
                     rank,
@@ -28,7 +28,7 @@ const scrapGoalRecord = (category) => {
                     goals,
                 });
             });
-            
+            console.log(statsTable);
             resolve(topPremierLeagueScorers);
         })
         .catch(err => {
@@ -36,6 +36,13 @@ const scrapGoalRecord = (category) => {
         });
     });
 }
+
+scrapGoalRecord('goals')
+.then(data => {
+
+}).catch(err => {
+
+});
 
 module.exports = {
     scrapGoalRecord
