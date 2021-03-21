@@ -31,14 +31,6 @@ const scrapTopNews = (category) => {
     });
 }
 
-// scrapTopNews('/headline')
-// .then(data => {
-//     console.log(data);
-// })
-// .catch(err => {
-//     console.log(err);
-// })
-
 module.exports = {
     scrapTopNews
 }
