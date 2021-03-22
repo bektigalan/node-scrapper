@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 
-const host = `https://trends.google.com/trends/trendingsearches/daily?geo=ID`;
+const host = `https://trends.google.com/trends/trendingsearches/daily?geo=US`;
 
 const scrapTopTopics = () => {
     return new Promise((resolve, reject) => {
@@ -27,7 +27,13 @@ const scrapTopTopics = () => {
 
                 list.each((index, element) => {
                     topics.push({
-                        title: $(element).find("div[class='title title-break']").text()
+                        rank: index + 1,
+                        topic: $(element).find("div[class$='title title-break'] > span").text().trim(),
+                        title: $(element).find("div[class='image-link-wrapper'] > div > a").attr('title'),
+                        link: $(element).find("div[class='image-link-wrapper'] > div > a").attr('href'),
+                        image: $(element).find("div[class='image-link-wrapper'] > div > a > div > img").attr('src'),
+                        portal: $(element).find("div[class='image-link-wrapper'] > div > a > div > div").text(),
+                        hits: $(element).find("div[ng-if='ctrl.currentFeedItemType === ctrl.FeedItemType.DAILY']").text().trim()
                     });
                 });
 
