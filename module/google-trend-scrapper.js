@@ -1,15 +1,15 @@
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 
-const host = `https://trends.google.com/trends/trendingsearches/daily?geo=US`;
+const host = `https://trends.google.com/trends/trendingsearches/daily`;
 
-const scrapTopTopics = () => {
+const scrapTopTopics = (country) => {
     return new Promise((resolve, reject) => {
         puppeteer
         .launch()
         .then(browser => browser.newPage())
         .then(page => {
-            return page.goto(host, 
+            return page.goto(host + country, 
             {
                 waitUntil:'load', 
                 timeout:0
