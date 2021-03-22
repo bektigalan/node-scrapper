@@ -28,7 +28,7 @@ const scrapTopTopics = () => {
                 list.each((index, element) => {
                     topics.push({
                         rank: index + 1,
-                        topic: $(element).find("div[class$='title title-break'] > span").text().trim(),
+                        topic: $(element).find("div[class$='details']").text().replace(/\n/g, '').trim().split('share')[0].trim(),
                         title: $(element).find("div[class='image-link-wrapper'] > div > a").attr('title'),
                         link: $(element).find("div[class='image-link-wrapper'] > div > a").attr('href'),
                         image: $(element).find("div[class='image-link-wrapper'] > div > a > div > img").attr('src'),
