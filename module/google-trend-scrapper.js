@@ -25,9 +25,9 @@ const scrapTopTopics = () => {
                 const list = $(element).find("md-list");
                 const topics = [];
 
-                list.each((index, element) => {
+                list.each(function() {
                     topics.push({
-                        title: $(element).find("span[ng-repeat='titlePart in titleArray'] > span").text()
+                        title: $(this).find("div[class='title title-break'] > span > span").text()
                     });
                 });
 
