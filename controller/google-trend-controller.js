@@ -9,6 +9,7 @@ const country = {
     SG: '?geo=SG',
     IN: '?geo=IN'
 }
+
 const getTopTopics = (req, res, next) => {
     const path = country[req.params.country.toUpperCase()];
 
