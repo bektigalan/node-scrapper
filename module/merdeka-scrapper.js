@@ -39,10 +39,6 @@ const scrapTopNews = (category) => {
   });
 };
 
-scrapTopNews()
-  .then((data) => console.log(data))
-  .catch((err) => console.log(err));
-
 module.exports = {
-  scrapTopNews,
+  scrapTopNews
 };
