@@ -56,14 +56,6 @@ const scrapTopTopics = (country) => {
     });
 }
 
-// scrapTopTopics()
-// .then(data => {
-//     console.log(data);
-// })
-// .catch(err => {
-//     console.log(err);
-// })
-
 module.exports = {
     scrapTopTopics
 }

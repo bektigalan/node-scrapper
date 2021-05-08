@@ -6,7 +6,12 @@ const host = "https://kumparan.com";
 const scrapTopNews = (category) => {
   return new Promise((resolve, reject) => {
     puppeteer
-      .launch()
+      .launch({
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+        ],
+      })
       .then((browser) => browser.newPage())
       .then((page) => {
         return page

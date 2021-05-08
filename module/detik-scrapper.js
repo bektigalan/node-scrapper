@@ -59,7 +59,12 @@ const scrapTopTopics = () => {
 const scrapTopVideos = () => {
     return new Promise((resolve, reject) => {
         puppeteer
-        .launch()
+        .launch({
+            args: [
+              '--no-sandbox',
+              '--disable-setuid-sandbox',
+            ],
+          })
         .then(browser => browser.newPage())
         .then(page => {
             return page.goto('https://20.detik.com/?tag_from=wp_belt_videoTerpopuler', 
