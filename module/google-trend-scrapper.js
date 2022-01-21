@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 
-const host = `https://trends.google.com/trends/trendingsearches/daily`;
+const host = 'https://trends.google.com/trends/trendingsearches/daily';
 
 const scrapTopTopics = (country) => {
     return new Promise((resolve, reject) => {
