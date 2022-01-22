@@ -6,7 +6,12 @@ const host = 'https://trends.google.com/trends/trendingsearches/daily';
 const scrapTopTopics = (country) => {
     return new Promise((resolve, reject) => {
         puppeteer
-        .launch()
+        .launch({
+            args: [
+              '--no-sandbox',
+              '--disable-setuid-sandbox',
+            ],
+          })
         .then(browser => browser.newPage())
         .then(page => {
             return page.goto(host + country, 
@@ -50,14 +55,6 @@ const scrapTopTopics = (country) => {
         });
     });
 }
-
-// scrapTopTopics()
-// .then(data => {
-//     console.log(data);
-// })
-// .catch(err => {
-//     console.log(err);
-// })
 
 module.exports = {
     scrapTopTopics
