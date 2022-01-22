@@ -1,7 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-const host = `https://indeks.kompas.com`;
+const host = 'https://indeks.kompas.com';
 
 const scrapTopNews = (category) => {
     return new Promise((resolve, reject) => {
